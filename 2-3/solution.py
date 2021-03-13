@@ -1,29 +1,31 @@
+def dfs(graph, visited, cur_node):
+    if visited[cur_node]:
+        return 0
+    visited[cur_node] = True
+    res = 1
+    for next_node in graph[cur_node]:
+        res = max(1 + dfs(graph, visited, next_node), res)
+    return res
+
+
 if __name__ == '__main__':
     test_cnt = int(input())
     for t in range(test_cnt):
-        n, init = input().split(' ')
+        n, start_node = input().split(" ")
         n = int(n)
-        vertex = input().split(' ')
         graph = {}
-        visited = {}
-        for v in vertex:
-            graph[v] = []
-            visited[v] = False
+        nodes = input().split(" ")
+        for node in nodes:
+            graph[node] = []
         for i in range(n):
-            raw_line = input().split(' ')
-            v = raw_line[0]
-            raw_line = raw_line[1:]
-            for i in range(n):
-                if raw_line[i] == '1':
-                    graph[v].append(vertex[i])
-        
-        depth = {init:1}
-        stack = [init]
-        while len(stack) > 0:
-            v = stack.pop()
-            if not visited[v]:
-                visited[v] = True
-                for neighbor in graph[v]:
-                    stack.append(neighbor)
-                    depth[neighbor] = max(depth.get(neighbor,0),depth[v]+1)
-        print(max(depth.values()))
+            row = input().split(" ")
+            node = row[0]
+            table = [int(x) for x in row[1:]]
+            for idx, exist in enumerate(table):
+                if exist == 1:
+                    graph[node].append(nodes[idx])
+        visited = {}
+        for node in nodes:
+            visited[node] = False
+        res = dfs(graph, visited, start_node)
+        print(res)
