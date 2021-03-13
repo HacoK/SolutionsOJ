@@ -25,5 +25,5 @@ if __name__ == '__main__':
                 visited[v] = True
                 for neighbor in graph[v]:
                     stack.append(neighbor)
-                    depth[neighbor] = depth[v] + 1
+                    depth[neighbor] = max(depth.get(neighbor,0),depth[v]+1)
         print(max(depth.values()))
