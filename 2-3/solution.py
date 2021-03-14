@@ -1,12 +1,10 @@
-def dfs(graph, visited, cur_node):
-    if visited[cur_node]:
-        return 0
+def dfs(graph, visited, cur_node, cur_depth):
+    global max_depth
+    max_depth = max(max_depth,cur_depth)
     visited[cur_node] = True
-    res = 1
     for next_node in graph[cur_node]:
-        res = max(1 + dfs(graph, visited, next_node), res)
-    return res
-
+        if not visited[next_node]:
+            dfs(graph, visited.copy(), next_node, cur_depth+1)
 
 if __name__ == '__main__':
     test_cnt = int(input())
@@ -27,5 +25,7 @@ if __name__ == '__main__':
         visited = {}
         for node in nodes:
             visited[node] = False
-        res = dfs(graph, visited, start_node)
-        print(res)
+        
+        max_depth = 0
+        dfs(graph, visited.copy(), start_node, 1)
+        print(max_depth)
