@@ -7,7 +7,6 @@ def check_chained(next,left_dict):
             global init
             if next == init:
                 cycle = True
-            return
         else:
             if next not in left_dict.keys():
                 return
